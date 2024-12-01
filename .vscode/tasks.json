@@ -36,6 +36,18 @@
                 "${workspaceFolder}/AdventOfCode2024/AdventOfCode2024.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "test",
+                "--project",
+                "${workspaceFolder}/AdventOfCode2024.Tests/AdventOfCode2024.Tests.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
