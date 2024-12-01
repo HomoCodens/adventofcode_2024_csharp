@@ -30,6 +30,6 @@ internal class Day1Solver : SolverBase<LocationIdLists>
     protected override int SolvePart2(LocationIdLists input)
     {
         var rightCounts = input.RightList.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
-        return input.LeftList.Select(l => l * (rightCounts.ContainsKey(l) ?  rightCounts[l] : 0)).Sum();
+        return input.LeftList.Select(l => l * (rightCounts.TryGetValue(l, out int value) ? value : 0)).Sum();
     }
 }
