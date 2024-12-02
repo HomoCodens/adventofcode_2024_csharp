@@ -14,7 +14,7 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
         {
             // return report.SkipLast(1).Zip(report.Skip(1)).Select(x => x.Second - x.First).Any(diff => diff == 0 || diff > 3);
             var sign = 0;
-            for (var i = 1; i < report.Count(); i++)
+            for (var i = 1; i < report.Length; i++)
             {
                 var diff = report[i] - report[i - 1];
 
@@ -44,20 +44,25 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
     {
         return input.Reports.Select(report =>
         {
+
             var sign = 0;
             var dampened = false;
-            for (var i = 1; i < report.Count(); i++)
+            var dampenedFirstElement = false;
+            for (var i = 1; i < report.Length; i++)
             {
-                var dampeningOffset = dampened ? 1 : 0;
+                var dampeningOffset = dampened ? (dampenedFirstElement ? 0 : 1) : 0;
                 var diff = report[i] - report[i - 1 - dampeningOffset];
 
                 if (diff == 0)
                 {
                     if (dampened)
                     {
+                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine("no bueno");
                         return false;
                     }
 
+                    dampenedFirstElement = i == 1;
                     dampened = true;
                     continue;
                 }
@@ -72,9 +77,12 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
                 {
                     if (dampened)
                     {
+                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine("no bueno");
                         return false;
                     }
 
+                                        dampenedFirstElement = i == 1;
                     dampened = true;
                     continue;
                 }
@@ -83,11 +91,15 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
                 {
                     if (dampened)
                     {
+                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine("no bueno");
                         return false;
                     }
+                                        dampenedFirstElement = i == 1;
                     dampened = true;
                 }
             }
+            // Console.WriteLine("SII BUENO");
             return true;
         })
         .Select(ok => ok ? 1 : 0)
