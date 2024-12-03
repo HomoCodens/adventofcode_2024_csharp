@@ -2,7 +2,7 @@ namespace AdventOfCode2024.Solvers.Day2;
 
 internal sealed class Day2Solver : SolverBase<UnusualData>
 {
-    protected override UnusualData ParseInput(string[] lines)
+    internal override UnusualData ParseInput(string[] lines)
     {
         var reports = lines.Select(line => line.Split(' ').Select(int.Parse).ToArray()).ToArray();
         return new UnusualData { Reports = reports };
@@ -50,6 +50,7 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
             var dampenedFirstElement = false;
             for (var i = 1; i < report.Length; i++)
             {
+                // That, my dears, is horseshit. Ya should only skip an element on the iteration where the problem occurs.
                 var dampeningOffset = dampened ? (dampenedFirstElement ? 0 : 1) : 0;
                 var diff = report[i] - report[i - 1 - dampeningOffset];
 
@@ -57,7 +58,7 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
                 {
                     if (dampened)
                     {
-                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine(string.Join(" ", report));
                         Console.WriteLine("no bueno");
                         return false;
                     }
@@ -77,12 +78,13 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
                 {
                     if (dampened)
                     {
-                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine(string.Join(" ", report));
                         Console.WriteLine("no bueno");
                         return false;
                     }
 
-                                        dampenedFirstElement = i == 1;
+                    dampenedFirstElement = i == 2;
+                    sign = -sign;
                     dampened = true;
                     continue;
                 }
@@ -91,11 +93,11 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
                 {
                     if (dampened)
                     {
-                                    Console.WriteLine(string.Join(" ", report));
+                        Console.WriteLine(string.Join(" ", report));
                         Console.WriteLine("no bueno");
                         return false;
                     }
-                                        dampenedFirstElement = i == 1;
+                    dampenedFirstElement = i == 1;
                     dampened = true;
                 }
             }

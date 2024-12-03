@@ -5,9 +5,10 @@ namespace AdventOfCode2024.Solvers.Day1;
 
 internal class Day1Solver : SolverBase<LocationIdLists>
 {
-    protected override LocationIdLists ParseInput(string[] lines)
+    internal override LocationIdLists ParseInput(string[] lines)
     {
-        var coordinates = lines.Select(l => {
+        var coordinates = lines.Select(l =>
+        {
             var parts = l.Split("   ");
             return (
                 int.Parse(parts[0]),

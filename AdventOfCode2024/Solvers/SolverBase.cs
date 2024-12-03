@@ -11,14 +11,18 @@ internal abstract class SolverBase<TInput> : ISolver
         var solutionPart1 = 0;
         var solutionPart2 = 0;
 
-        try {
+        try
+        {
             solutionPart1 = this.SolvePart1(input);
-        } catch
-        {}
+        }
+        catch
+        { }
 
-        try {
+        try
+        {
             solutionPart2 = this.SolvePart2(input);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e);
         }
@@ -30,7 +34,7 @@ internal abstract class SolverBase<TInput> : ISolver
         };
     }
 
-    protected abstract TInput ParseInput(string[] lines);
+    internal abstract TInput ParseInput(string[] lines);
 
     protected abstract int SolvePart1(TInput input);
 

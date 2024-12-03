@@ -1,10 +1,10 @@
 ﻿using AdventOfCode2024.Solvers.Day1;
 using AdventOfCode2024.Solvers.Day2;
+using AdventOfCode2024.Solvers.Day3;
 
-var solver = new Day2Solver();
+var solver = new Day3Solver();
 
-
-var lines = File.ReadAllLines("/home/thoenis/projects/AoC24/AdventOfCode2024/Input/Day2/input.txt");
+var lines = File.ReadAllLines("E:/repos/adventofcode_2024_csharp/AdventOfCode2024/Input/Day3/input.txt").Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
 
 var result = solver.Solve(lines);
 
