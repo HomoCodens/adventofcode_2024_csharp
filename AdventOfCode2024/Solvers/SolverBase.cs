@@ -6,6 +6,7 @@ internal abstract class SolverBase<TInput> : ISolver
 {
     public DayResult Solve(string[] lines)
     {
+        lines = lines.Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
         var input = this.ParseInput(lines);
 
         var solutionPart1 = 0;

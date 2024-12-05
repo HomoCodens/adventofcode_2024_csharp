@@ -30,6 +30,24 @@ public class Day3Tests
     }
 
     [Test]
+    public void InputWithDosAndDontsGetsParsedCorrectyl()
+    {
+        var input = Input.GetInput(3, "example2.txt");
+
+        var instructions = this.solver.ParseInput(input);
+
+        instructions.Should().BeEquivalentTo(new NorthPoleTobogganRentalShopComputerInstruction[]
+        {
+            new MulInstruction() { Factor1 = 2, Factor2 = 4 },
+            new DontInstruction(),
+            new MulInstruction() { Factor1 = 5, Factor2 = 5 },
+            new MulInstruction() { Factor1 = 11, Factor2 = 8 },
+            new DoInstruction(),
+            new MulInstruction() { Factor1 = 8, Factor2 = 5 },
+        });
+    }
+
+    [Test]
     public void Part1_SolvesCorrectly()
     {
         var input = Input.GetInput(3, "example.txt");
@@ -37,5 +55,15 @@ public class Day3Tests
         var solution = this.solver.Solve(input);
 
         solution.SolutionPart1.Should().Be(161);
+    }
+
+    [Test]
+    public void Part2_SolvesCorrectly()
+    {
+        var input = Input.GetInput(3, "example2.txt");
+
+        var solution = this.solver.Solve(input);
+
+        solution.SolutionPart2.Should().Be(48);
     }
 }
