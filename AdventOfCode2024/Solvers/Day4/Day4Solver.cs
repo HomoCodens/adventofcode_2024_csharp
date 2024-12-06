@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode2024.Solvers;
+namespace AdventOfCode2024.Solvers.Day4;
 
 internal partial class Day4Solver : SolverBase<string[]>
 {
@@ -12,12 +12,25 @@ internal partial class Day4Solver : SolverBase<string[]>
 
     protected override int SolvePart1(string[] input)
     {
-        return this.FindXmases(input) + this.FindXmasesCol(input) + FindXmasesDiagUp(input);
+        return FindXmases(input) + FindXmasesCol(input) + FindXmasesDiagUp(input) + FindXmasesDiagDown(input);
     }
 
     protected override int SolvePart2(string[] input)
     {
-        throw new NotImplementedException();
+        var dim = input.Length;
+        var count = 0;
+        for (var i = 1; i < dim - 1; i++)
+        {
+            for (var j = 1; j < dim - 1; j++)
+            {
+                if (input[i][j] == 'A' && this.IsMasX(input, i, j))
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     private int FindXmases(IEnumerable<string> lines)
@@ -31,39 +44,76 @@ internal partial class Day4Solver : SolverBase<string[]>
     private int FindXmasesCol(string[] lines)
     {
         var dim = lines.Length;
-        var columnwise = new StringBuilder[dim];
+        var columnwise = new string[dim];
 
-        foreach (var col in Enumerable.Range(0, dim - 1))
+        foreach (var col in Enumerable.Range(0, dim))
         {
-            var colBuilder = columnwise[col];
-            foreach (var row in Enumerable.Range(0, dim - 1))
+            var colBuilder = new StringBuilder();
+            foreach (var row in Enumerable.Range(0, dim))
             {
                 colBuilder.Append(lines[row][col]);
             }
+            columnwise[col] = colBuilder.ToString();
         }
 
-        return FindXmases(columnwise.Select(b => b.ToString()));
+        return FindXmases(columnwise);
     }
 
     private int FindXmasesDiagUp(string[] lines)
     {
         var dim = lines.Length;
         var nDiagonals = 2 * dim - 1;
-        var diagonalwise = new StringBuilder[nDiagonals];
+        var diagonalwise = new string[nDiagonals];
 
-        foreach (var diag in Enumerable.Range(0, nDiagonals - 1))
+        foreach (var diag in Enumerable.Range(0, nDiagonals))
         {
-            var diagBuilder = diagonalwise[diag];
-            var diagonalLenf = diag < dim ? diag : 2 * dim - 1 - diag;
-            var startingRow = diag < dim ? diag : dim;
-            var startingCol = diag < dim ? 0 : 2 * diag - 1 - dim;
+            var diagBuilder = new StringBuilder();
+            var diagonalLenf = diag < dim ? diag + 1 : 2 * dim - 1 - diag;
+            var startingRow = diag < dim ? diag : dim - 1;
+            var startingCol = diag < dim ? 0 : diag - dim + 1;
             foreach (var idx in Enumerable.Range(0, diagonalLenf))
             {
                 diagBuilder.Append(lines[startingRow - idx][startingCol + idx]);
             }
+            diagonalwise[diag] = diagBuilder.ToString();
         }
 
-        return FindXmases(diagonalwise.Select(b => b.ToString()));
+        return FindXmases(diagonalwise);
+    }
+
+    private int FindXmasesDiagDown(string[] lines)
+    {
+        var dim = lines.Length;
+        var nDiagonals = 2 * dim - 1;
+        var diagonalwise = new string[nDiagonals];
+
+        foreach (var diag in Enumerable.Range(0, nDiagonals))
+        {
+            var diagBuilder = new StringBuilder();
+            var diagonalLenf = diag < dim ? diag + 1 : 2 * dim - 1 - diag;
+            var startingRow = diag < dim ? 0 : diag - dim + 1;
+            var startingCol = diag < dim ? dim - diag - 1 : 0;
+            foreach (var idx in Enumerable.Range(0, diagonalLenf))
+            {
+                diagBuilder.Append(lines[startingRow + idx][startingCol + idx]);
+            }
+            diagonalwise[diag] = diagBuilder.ToString();
+        }
+
+        return FindXmases(diagonalwise);
+    }
+
+    private bool IsMasX(string[] lines, int row, int col)
+    {
+        var uppieLeftie = lines[row - 1][col - 1];
+        var uppieRightie = lines[row - 1][col + 1];
+        var downieLeftie = lines[row + 1][col - 1];
+        var downieRightie = lines[row + 1][col + 1];
+
+        return ((uppieLeftie == 'M' && downieRightie == 'S') ||
+                (uppieLeftie == 'S' && downieRightie == 'M')) &&
+                ((uppieRightie == 'M' && downieLeftie == 'S') ||
+                (uppieRightie == 'S' && downieLeftie == 'M'));
     }
 
     [GeneratedRegex("XMAS")]

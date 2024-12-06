@@ -1,7 +1,7 @@
-using AdventOfCode2024.Solvers;
+using AdventOfCode2024.Solvers.Day4;
 using AdventOfCode2024.Tests.Util;
 
-namespace AdventOfCode2024.Tests;
+namespace AdventOfCode2024.Tests.Day4;
 
 public class Day4Tests
 {
@@ -26,10 +26,10 @@ public class Day4Tests
     [Test]
     public void Part2_SolvesCorrectly()
     {
-        // var input = Input.GetInput(3, "example2.txt");
+        var input = Input.GetInput(4, "example.txt");
 
-        // var solution = this.solver.Solve(input);
+        var solution = this.solver.Solve(input);
 
-        // solution.SolutionPart2.Should().Be(48);
+        solution.SolutionPart2.Should().Be(9);
     }
 }

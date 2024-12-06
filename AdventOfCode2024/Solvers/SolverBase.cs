@@ -16,16 +16,16 @@ internal abstract class SolverBase<TInput> : ISolver
         {
             solutionPart1 = this.SolvePart1(input);
         }
-        catch
-        { }
+        catch (NotImplementedException)
+        {
+        }
 
         try
         {
             solutionPart2 = this.SolvePart2(input);
         }
-        catch (Exception e)
+        catch (NotImplementedException)
         {
-            Console.WriteLine(e);
         }
 
         return new()
