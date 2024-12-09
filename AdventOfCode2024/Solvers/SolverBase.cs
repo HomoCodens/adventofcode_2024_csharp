@@ -8,8 +8,8 @@ internal abstract class SolverBase<TInput> : ISolver
     {
         var input = this.ParseInput(lines);
 
-        var solutionPart1 = 0;
-        var solutionPart2 = 0;
+        var solutionPart1 = 0ul;
+        var solutionPart2 = 0ul;
 
         try
         {
@@ -36,7 +36,7 @@ internal abstract class SolverBase<TInput> : ISolver
 
     internal abstract TInput ParseInput(string[] lines);
 
-    protected abstract int SolvePart1(TInput input);
+    protected abstract ulong SolvePart1(TInput input);
 
-    protected abstract int SolvePart2(TInput input);
+    protected abstract ulong SolvePart2(TInput input);
 }

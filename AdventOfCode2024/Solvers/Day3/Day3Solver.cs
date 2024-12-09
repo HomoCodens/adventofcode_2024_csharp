@@ -22,18 +22,18 @@ internal class Day3Solver : SolverBase<NorthPoleTobogganRentalShopComputerInstru
                             })).ToArray();
     }
 
-    protected override int SolvePart1(NorthPoleTobogganRentalShopComputerInstruction[] input)
+    protected override ulong SolvePart1(NorthPoleTobogganRentalShopComputerInstruction[] input)
     {
-        return input.Where(m => m is MulInstruction).Select(mul =>
+        return (ulong)input.Where(m => m is MulInstruction).Select(mul =>
         {
             var muul = (MulInstruction)mul;
             return muul.Factor1 * muul.Factor2;
         }).Sum();
     }
 
-    protected override int SolvePart2(NorthPoleTobogganRentalShopComputerInstruction[] input)
+    protected override ulong SolvePart2(NorthPoleTobogganRentalShopComputerInstruction[] input)
     {
-        return input.Aggregate((Sum: 0, Enabled: true), (acc, instruction) => instruction switch
+        return (ulong)input.Aggregate((Sum: 0, Enabled: true), (acc, instruction) => instruction switch
         {
             MulInstruction mul => acc.Enabled ? (acc.Sum + mul.Factor1 * mul.Factor2, acc.Enabled) : acc,
             DoInstruction _ => (acc.Sum, true),

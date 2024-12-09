@@ -10,12 +10,12 @@ internal partial class Day4Solver : SolverBase<string[]>
         return lines;
     }
 
-    protected override int SolvePart1(string[] input)
+    protected override ulong SolvePart1(string[] input)
     {
-        return FindXmases(input) + FindXmasesCol(input) + FindXmasesDiagUp(input) + FindXmasesDiagDown(input);
+        return (ulong)(FindXmases(input) + FindXmasesCol(input) + FindXmasesDiagUp(input) + FindXmasesDiagDown(input));
     }
 
-    protected override int SolvePart2(string[] input)
+    protected override ulong SolvePart2(string[] input)
     {
         var dim = input.Length;
         var count = 0;
@@ -30,7 +30,7 @@ internal partial class Day4Solver : SolverBase<string[]>
             }
         }
 
-        return count;
+        return (ulong)count;
     }
 
     private int FindXmases(IEnumerable<string> lines)

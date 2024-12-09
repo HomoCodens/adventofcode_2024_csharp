@@ -2,18 +2,18 @@ namespace AdventOfCode2024.Solvers.Day6;
 
 internal class Day6Solver : SolverBase<World>
 {
-    protected override int SolvePart1(World input)
+    protected override ulong SolvePart1(World input)
     {
         var positionsVisited = GetPositionsVisited(input.Warehouse, input.GuardState);
 
-        return positionsVisited.Count;
+        return (ulong)positionsVisited.Count;
     }
 
-    protected override int SolvePart2(World input)
+    protected override ulong SolvePart2(World input)
     {
         var positionsVisited = GetPositionsVisited(input.Warehouse, input.GuardState);
 
-        var count = 0;
+        var count = 0ul;
 
         // Could optimize e.g. by filtering out those that do not hit an obstacle when turning right and goind straight
         foreach (var pos in positionsVisited)

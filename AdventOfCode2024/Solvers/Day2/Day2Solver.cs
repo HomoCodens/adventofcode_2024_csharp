@@ -8,9 +8,9 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
         return new UnusualData { Reports = reports };
     }
 
-    protected override int SolvePart1(UnusualData input)
+    protected override ulong SolvePart1(UnusualData input)
     {
-        return input.Reports.Select(report =>
+        return (ulong)input.Reports.Select(report =>
         {
             // return report.SkipLast(1).Zip(report.Skip(1)).Select(x => x.Second - x.First).Any(diff => diff == 0 || diff > 3);
             var sign = 0;
@@ -40,9 +40,9 @@ internal sealed class Day2Solver : SolverBase<UnusualData>
         .Sum();
     }
 
-    protected override int SolvePart2(UnusualData input)
+    protected override ulong SolvePart2(UnusualData input)
     {
-        return input.Reports.Select(report =>
+        return (ulong)input.Reports.Select(report =>
         {
 
             var sign = 0;

@@ -2,16 +2,16 @@ namespace AdventOfCode2024.Solvers.Day5;
 
 internal class Day5Solver : SolverBase<PrinterSetup>
 {
-    protected override int SolvePart1(PrinterSetup input)
+    protected override ulong SolvePart1(PrinterSetup input)
     {
-        return input.Jobs.Where(j => IsDotGud(input.Dependencies, j)).Select(GetMiddleThinger).Sum();
+        return (ulong)input.Jobs.Where(j => IsDotGud(input.Dependencies, j)).Select(GetMiddleThinger).Sum();
     }
 
-    protected override int SolvePart2(PrinterSetup input)
+    protected override ulong SolvePart2(PrinterSetup input)
     {
         var notGudJobs = input.Jobs.Where(j => !IsDotGud(input.Dependencies, j)).ToArray();
 
-        return input.Jobs
+        return (ulong)input.Jobs
                 .Where(j => !IsDotGud(input.Dependencies, j))
                 .Select(j => j.OrderBy(p => p, new PageComparer(GetDependenciesForJob(input.Dependencies, j))))
                 .Select(x => GetMiddleThinger([.. x]))
