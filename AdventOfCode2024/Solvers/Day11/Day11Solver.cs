@@ -4,10 +4,20 @@ internal class Day11Solver : SolverBase<ulong[]>
 {
     protected override ulong SolvePart1(ulong[] input)
     {
+        var x = (ulong)6;
+        for (var i = 0; i <= 18; i++)
+        {
+            var nDigits = Math.Floor(Math.Log10(x)) + 1;
+            var halfths = Math.Pow(10, nDigits / 2);
+            Console.WriteLine($"{x} has {nDigits} digits and results in {halfths}");
+            x = x * 10 + 6;
+        }
+
         var stones = input.AsEnumerable();
         for (var i = 0; i < 25; i++)
         {
-            Console.WriteLine(string.Join(' ', stones));
+            Console.WriteLine(stones.Count());
+            // Console.WriteLine(string.Join(' ', stones));
             stones = this.Blink(stones);
         }
 
@@ -16,7 +26,8 @@ internal class Day11Solver : SolverBase<ulong[]>
 
     protected override ulong SolvePart2(ulong[] input)
     {
-        throw new NotImplementedException();
+        var memry = new Dictionary<(ulong, int), ulong>();
+        return input.Select(s => AllTheStones(s, 75, memry)).Aggregate((acc, x) => acc + x);
     }
 
     internal override ulong[] ParseInput(string[] lines)
@@ -26,15 +37,32 @@ internal class Day11Solver : SolverBase<ulong[]>
 
     private IEnumerable<ulong> Blink(IEnumerable<ulong> stones)
     {
-        return stones.SelectMany(s =>
+        return stones.SelectMany(VolveStone);
+    }
+
+    private IEnumerable<ulong> VolveStone(ulong stone)
+    {
+        var nDigits = Math.Floor(Math.Log10(stone)) + 1;
+        return stone switch
         {
-            var nDigits = Math.Ceiling(Math.Log10(s));
-            return s switch
-            {
-                0 => [1ul],
-                _ when nDigits > 0 && nDigits % 2 == 0 => new ulong[] { (ulong)Math.Floor(s / Math.Pow(10, nDigits / 2)), s % (ulong)Math.Pow(10, nDigits / 2) },
-                _ => [s * 2024ul]
-            };
-        });
+            0 => [1ul],
+            _ when nDigits % 2 == 0 => new ulong[] { (ulong)Math.Floor(stone / Math.Pow(10, nDigits / 2)), stone % (ulong)Math.Pow(10, nDigits / 2) },
+            _ => [stone * 2024ul]
+        };
+    }
+
+    private ulong AllTheStones(ulong stone, int stepsToGo, Dictionary<(ulong, int), ulong> memry)
+    {
+        if (stepsToGo == 0)
+        {
+            return 1;
+        }
+
+        if (!memry.ContainsKey((stone, stepsToGo)))
+        {
+            memry[(stone, stepsToGo)] = VolveStone(stone).Select(newStone => AllTheStones(newStone, stepsToGo - 1, memry)).Aggregate((acc, x) => acc + x);
+        }
+
+        return memry[(stone, stepsToGo)];
     }
 }
