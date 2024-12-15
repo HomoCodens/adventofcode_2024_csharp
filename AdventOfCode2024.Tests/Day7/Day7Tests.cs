@@ -44,6 +44,17 @@ public class Day7Tests
     }
 
     [Test]
+    [TestCase(1ul, 2ul, 12ul)]
+    [TestCase(123ul, 12345ul, 12312345ul)]
+    [TestCase(123ul, 234ul, 123234ul)]
+    [TestCase(123456789ul, 123456789ul, 123456789123456789ul)]
+    [TestCase(1ul, 10ul, 110ul)]
+    public void Concat_Does(ulong a, ulong b, ulong expect)
+    {
+        Day7Solver.Concat(a, b).Should().Be(expect);
+    }
+
+    [Test]
     public void Part1_TheOneWithMulBeforePlus()
     {
         var input = new string[] { "7: 2 3 1" };
@@ -82,5 +93,15 @@ public class Day7Tests
         var result = this.solver.Solve(input);
 
         result.SolutionPart1.Should().Be(3749);
+    }
+
+    [Test]
+    public void SolvePart2_ShouldSolvePart2Correctly()
+    {
+        var input = Input.GetInput(7, "example.txt");
+
+        var result = this.solver.Solve(input);
+
+        result.SolutionPart2.Should().Be(11387);
     }
 }

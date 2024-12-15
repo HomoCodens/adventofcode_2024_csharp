@@ -13,9 +13,9 @@ using AdventOfCode2024.Solvers.Day7;
 using AdventOfCode2024.Solvers.Day8;
 using AdventOfCode2024.Solvers.Day9;
 
-var solver = new Day14Solver();
+var solver = new Day7Solver();
 
-var lines = File.ReadAllLines("/home/thoenis/projects/AoC24/AdventOfCode2024/Input/Day14/input.txt");
+var lines = File.ReadAllLines("/home/thoenis/projects/AoC24/AdventOfCode2024/Input/Day7/input.txt");
 
 var result = solver.Solve(lines);
 Console.WriteLine(result.SolutionPart1);

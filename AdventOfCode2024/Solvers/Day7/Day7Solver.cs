@@ -1,36 +1,19 @@
-using System.Numerics;
-
 namespace AdventOfCode2024.Solvers.Day7;
 
 internal class Day7Solver : SolverBase<CalibrationEquation[]>
 {
     protected override ulong SolvePart1(CalibrationEquation[] input)
     {
-        var staufs = input.Where(equation => IsSolveABall(equation.TestValue, equation.Operands)).Select(equation => equation.TestValue).ToArray();
+        var staufs = input.Where(equation => IsSolveABall(equation.TestValue, equation.Operands, false)).Select(equation => equation.TestValue).ToArray();
 
-        var acc = 0UL;
-        var overflowed = false;
-        foreach (var stauf in staufs)
-        {
-            if (acc + stauf < acc)
-            {
-                overflowed = true;
-                break;
-            }
-
-            acc += stauf;
-        }
-        return staufs.Aggregate((a, b) =>
-        {
-            var res = a + b;
-            Console.WriteLine(res);
-            return res;
-        });
+        return staufs.Aggregate((a, b) => a + b);
     }
 
     protected override ulong SolvePart2(CalibrationEquation[] input)
     {
-        throw new NotImplementedException();
+        var staufs = input.Where(equation => IsSolveABall(equation.TestValue, equation.Operands, true)).Select(equation => equation.TestValue).ToArray();
+
+        return staufs.Aggregate((a, b) => a + b);
     }
 
     internal override CalibrationEquation[] ParseInput(string[] lines)
@@ -47,8 +30,21 @@ internal class Day7Solver : SolverBase<CalibrationEquation[]>
         }).ToArray();
     }
 
-    private bool IsSolveABall(ulong testValue, ulong[] operands, ulong akkumulator = 0)
+    internal static ulong Concat(ulong a, ulong b)
     {
+        var nDigitsB = Math.Floor(Math.Log10(b)) + 1;
+
+        return (ulong)Math.Pow(10, nDigitsB) * a + b;
+    }
+
+    private static bool IsSolveABall(ulong testValue, ulong[] operands, bool allowConcat, ulong akkumulator = 0)
+    {
+        if (akkumulator == 0)
+        {
+            (var firstOperand, operands) = operands;
+            akkumulator = firstOperand;
+        }
+
         if (operands is [])
         {
             return akkumulator == testValue;
@@ -61,19 +57,8 @@ internal class Day7Solver : SolverBase<CalibrationEquation[]>
 
         var (operand, rest) = operands;
 
-        var plused = operand + akkumulator;
-        var multed = operand * akkumulator;
-
-        if (plused < akkumulator)
-        {
-            throw new Exception("This is not a valid solution");
-        }
-
-        if (multed < akkumulator)
-        {
-            throw new Exception("This is not a valid solution");
-        }
-
-        return IsSolveABall(testValue, rest, akkumulator + operand) || IsSolveABall(testValue, rest, akkumulator * operand);
+        return IsSolveABall(testValue, rest, allowConcat, akkumulator + operand) ||
+                IsSolveABall(testValue, rest, allowConcat, akkumulator * operand) ||
+                (allowConcat && IsSolveABall(testValue, rest, allowConcat, Concat(akkumulator, operand)));
     }
 }
