@@ -24,17 +24,17 @@ public class Day13Tests
             [
                 new ClawMasheen()
                 {
-                    AButton = new Solvers.Day6.Point()
+                    AButton = new LongVector()
                     {
                         X = 94,
                         Y = 34,
                     },
-                    BButton = new Solvers.Day6.Point()
+                    BButton = new LongVector()
                     {
                         X = 22,
                         Y = 67,
                     },
-                    Prize = new Solvers.Day6.Point()
+                    Prize = new LongVector()
                     {
                         X = 8400,
                         Y = 5400,
@@ -42,17 +42,17 @@ public class Day13Tests
                 },
                 new ClawMasheen()
                 {
-                    AButton = new Solvers.Day6.Point()
+                    AButton = new LongVector()
                     {
                         X = 26,
                         Y = 66,
                     },
-                    BButton = new Solvers.Day6.Point()
+                    BButton = new LongVector()
                     {
                         X = 67,
                         Y = 21,
                     },
-                    Prize = new Solvers.Day6.Point()
+                    Prize = new LongVector()
                     {
                         X = 12748,
                         Y = 12176,
@@ -60,17 +60,17 @@ public class Day13Tests
                 },
                 new ClawMasheen()
                 {
-                    AButton = new Solvers.Day6.Point()
+                    AButton = new LongVector()
                     {
                         X = 17,
                         Y = 86,
                     },
-                    BButton = new Solvers.Day6.Point()
+                    BButton = new LongVector()
                     {
                         X = 84,
                         Y = 37,
                     },
-                    Prize = new Solvers.Day6.Point()
+                    Prize = new LongVector()
                     {
                         X = 7870,
                         Y = 6450,
@@ -78,17 +78,17 @@ public class Day13Tests
                 },
                 new ClawMasheen()
                 {
-                    AButton = new Solvers.Day6.Point()
+                    AButton = new LongVector()
                     {
                         X = 69,
                         Y = 23,
                     },
-                    BButton = new Solvers.Day6.Point()
+                    BButton = new LongVector()
                     {
                         X = 27,
                         Y = 71,
                     },
-                    Prize = new Solvers.Day6.Point()
+                    Prize = new LongVector()
                     {
                         X = 18641,
                         Y = 10279,
